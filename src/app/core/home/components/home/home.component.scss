@@ -12,3 +12,12 @@ mat-sidenav {
   width: 200px;
   background-color: var(--sidvan_background);
 }
+
+.content {
+  background-color: var(--content_background);
+}
+
+.main {
+  margin: 1rem;
+  border-radius: 8px;
+}

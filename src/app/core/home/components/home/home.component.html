@@ -3,9 +3,9 @@
     <app-sidenav-list (closeSideNav)="sidenav.close()"></app-sidenav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content class="content">
     <app-toolbar (SideNavToggle)="sidenav.toggle()"></app-toolbar>
-    <main>
+    <main class="main">
       <router-outlet></router-outlet>
     </main>
   </mat-sidenav-content>
