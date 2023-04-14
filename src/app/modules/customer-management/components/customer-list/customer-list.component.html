@@ -1,1 +1,119 @@
-<p>customer-list works!</p>
+<app-customer-search></app-customer-search>
+<div
+  class="mt-2"
+  [ngClass]="
+    !customerManagementService.searchModeStatus
+      ? 'customer-list'
+      : 'customer-list-search'
+  "
+>
+  <div class="header">
+    <h3 class="d-flex justify-content-center align-items-center list">
+      <i>Customer List</i>
+    </h3>
+    <button mat-button class="btn-add" (click)="addCustomer()">
+      Add Customer
+    </button>
+  </div>
+  <mat-progress-bar
+    *ngIf="customerManagementService.loadingCustomer"
+    mode="indeterminate"
+  ></mat-progress-bar>
+  <div class="table-container">
+    <table mat-table [dataSource]="customerManagementService.data">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>Row</th>
+        <td class="index" mat-cell *matCellDef="let element">
+          {{
+            !customerManagementService.searchMode
+              ? customerManagementService.dataSource.filteredData.indexOf(
+                  element
+                ) + 1
+              : customerManagementService.dataSourceSearch.filteredData.indexOf(
+                  element
+                ) + 1
+          }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.Firstname }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.Lastname }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.Email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthDate">
+        <th mat-header-cell *matHeaderCellDef>Birth Date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.DateOfBirth | date : "mediumDate" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+        <td mat-cell *matCellDef="let element">{{ element.PhoneNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="bankAccountNumber">
+        <th mat-header-cell *matHeaderCellDef>Bank Account Number</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.BankAccountNumber }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef class="action-header">Action</th>
+        <td mat-cell *matCellDef="let element; let i = index" class="action">
+          <button
+            mat-button
+            [matMenuTriggerFor]="menu"
+            class="btn-action"
+            matTooltip="Menu"
+          >
+            <mat-icon class="more">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item class="edit" (click)="editCustomer(element)">
+              <mat-icon class="edit">edit_note</mat-icon>
+              Edit
+            </button>
+            <button
+              mat-menu-item
+              class="delete"
+              (click)="customerManagementService.removeCustomer(element)"
+            >
+              <mat-icon class="delete">delete</mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <mat-paginator
+    class="paginator"
+    [pageSize]="customerManagementService.pageEvent.pageSize"
+    [pageIndex]="customerManagementService.pageEvent.pageIndex"
+    aria-label="Select page of periodic elements"
+    [length]="
+      !customerManagementService.searchMode
+        ? customerManagementService.pageEvent.length
+        : customerManagementService.lengthSearch
+    "
+    (page)="changePaging($event)"
+    #paginator
+  >
+  </mat-paginator>
+</div>
