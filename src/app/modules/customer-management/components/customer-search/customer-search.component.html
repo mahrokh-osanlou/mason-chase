@@ -1,1 +1,177 @@
-<p>customer-search works!</p>
+<mat-accordion class="search-panel">
+  <mat-expansion-panel
+    #expansionPanel
+    hideToggle
+    (opened)="expansion_onOpen(expansionPanel)"
+    (closed)="expansion_onClose(expansionPanel)"
+  >
+    <mat-expansion-panel-header *ngIf="showSearchHeader">
+      <mat-icon class="search-search">search</mat-icon>
+      <input
+        class="search-input"
+        #name
+        aria-label="Number"
+        (keydown)="searchInput_onKeyDown($event)"
+        (blur)="searchInput_onBlur()"
+        (focus)="searchInput_onFocus()"
+        matInput
+        type="text"
+        placeholder="Name"
+        [formControl]="nameInputFormControl"
+        [matAutocomplete]="nameAuto"
+        [(ngModel)]="Name"
+      />
+      <mat-autocomplete #nameAuto="matAutocomplete">
+        <mat-option
+          *ngFor="let item of customerManagementService.nameList | async"
+          [value]="item"
+          (click)="searchOnFilter()"
+        >
+          <span> {{ item }}</span>
+        </mat-option>
+      </mat-autocomplete>
+      <input
+        class="search-input"
+        #email
+        aria-label="Number"
+        (keydown)="searchInput_onKeyDown($event)"
+        (blur)="searchInput_onBlur()"
+        (focus)="searchInput_onFocus()"
+        matInput
+        placeholder="Email"
+        [formControl]="emailInputFormControl"
+        [matAutocomplete]="emailAuto"
+        [(ngModel)]="Email"
+      />
+      <mat-autocomplete #emailAuto="matAutocomplete">
+        <mat-option
+          *ngFor="let item of customerManagementService.emailList | async"
+          [value]="item"
+          (click)="searchOnFilter()"
+        >
+          <span> {{ item }}</span>
+        </mat-option>
+      </mat-autocomplete>
+      <button
+        mat-icon-button
+        class="export-button"
+        matTooltip="Filter and Advanced Search"
+      >
+        <mat-icon class="material-icons"> filter_alt </mat-icon>
+      </button>
+    </mat-expansion-panel-header>
+    <mat-expansion-panel-header
+      *ngIf="!showSearchHeader"
+      class="mat-expansion-panel-header-open"
+    >
+      <h3 class="search-font">
+        <i> Search </i>
+      </h3>
+      <button
+        mat-icon-button
+        class="export-button"
+        matTooltip="Filter and Advanced Search"
+      >
+        <mat-icon class="material-icons"> filter_alt </mat-icon>
+      </button>
+    </mat-expansion-panel-header>
+
+    <div class="search-pandel">
+      <div class="d-flex justify-content-between flex-row">
+        <div class="column-first d-flex flex-column">
+          <div class="row d-flex flex-column">
+            <div class="col-2 d-flex title-name">
+              <div class="my-auto mx-0 text-nowrap">
+                <span> Name </span>
+              </div>
+            </div>
+            <div class="col">
+              <div>
+                <mat-form-field class="w-90" appearance="outline">
+                  <input
+                    #searchInput
+                    aria-label="Number"
+                    (keydown)="searchInput_onKeyDown($event)"
+                    matInput
+                    [formControl]="nameInputFormControl"
+                    [matAutocomplete]="name1Auto"
+                    [(ngModel)]="Name"
+                  />
+
+                </mat-form-field>
+              </div>
+              <mat-autocomplete #name1Auto="matAutocomplete">
+                <mat-option
+                  *ngFor="
+                    let item of customerManagementService.nameList | async
+                  "
+                  [value]="item"
+                  (click)="searchOnFilter()"
+                >
+                  <span> {{ item }}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+          </div>
+        </div>
+        <div class="column-second d-flex flex-column mb-3">
+          <div class="row d-flex flex-column">
+            <div class="col-2 d-flex title-name">
+              <div class="my-auto mx-0 text-nowrap">
+                <span> Email </span>
+              </div>
+            </div>
+            <div class="col">
+              <div>
+                <mat-form-field class="w-90" appearance="outline">
+                  <input
+                    #searchInput
+                    [formControl]="emailInputFormControl"
+                    aria-label="Number"
+                    (keydown)="searchInput_onKeyDown($event)"
+                    matInput
+                    [(ngModel)]="Email"
+                    [matAutocomplete]="email1Auto"
+                    autocomplete="new-password"
+                  />
+                </mat-form-field>
+                <mat-autocomplete #email1Auto="matAutocomplete">
+                  <mat-option
+                    *ngFor="
+                      let item of customerManagementService.emailList | async
+                    "
+                    [value]="item"
+                    (click)="searchOnFilter()"
+                  >
+                    <span>{{ item }}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-action-row class="filter-action">
+      <div class="d-flex">
+        <button mat-button class="right" (click)="OnClearFilter()">
+          <span class="clear-filter"> Reset </span>
+        </button>
+
+        <button mat-button (click)="searchOnFilter()" class="right seach-btn">
+          Search
+        </button>
+
+        <button
+          mat-button
+          (click)="expansionPanel.close()"
+          class="export-button clear-filter"
+        >
+          <mat-icon aria-label="Close Search" matTooltip="Close Search"
+            >expand_less</mat-icon
+          >
+        </button>
+      </div>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
