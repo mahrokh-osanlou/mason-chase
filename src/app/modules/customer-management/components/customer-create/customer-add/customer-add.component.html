@@ -1,1 +1,260 @@
-<p>customer-add works!</p>
+<div class="customer-add">
+  <form class="d-flex ms-5 mt-4 form flex-column">
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <div class="d-flex justify-content-start align-items-start flex-column">
+          <div class="label">
+            <mat-label class="input-label">First Name</mat-label>
+          </div>
+          <mat-form-field
+            class="field mt-2"
+            appearance="outline"
+            [ngClass]="
+              customerManagementService.firstNameFormControl.valid
+                ? 'profix'
+                : 'prefix'
+            "
+          >
+            <input
+              type="text"
+              matInput
+              [formControl]="customerManagementService.firstNameFormControl"
+              [errorStateMatcher]="matcher"
+              placeholder="First Name"
+            />
+            <mat-error
+              *ngIf="
+                customerManagementService.firstNameFormControl.hasError(
+                  'required'
+                )
+              "
+            >
+              First Name is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <div class="d-flex justify-content-start align-items-start flex-column">
+          <div class="label">
+            <mat-label class="input-label">Last Name</mat-label>
+          </div>
+          <mat-form-field
+            class="field mt-2"
+            appearance="outline"
+            [ngClass]="
+              customerManagementService.lastNameFormControl.valid
+                ? 'profix'
+                : 'prefix'
+            "
+          >
+            <input
+              type="text"
+              matInput
+              [formControl]="customerManagementService.lastNameFormControl"
+              [errorStateMatcher]="matcher"
+              placeholder="Last Name"
+            />
+            <mat-error
+              *ngIf="
+                customerManagementService.lastNameFormControl.hasError(
+                  'required'
+                )
+              "
+            >
+              Last Name is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <div
+          class="d-flex justify-content-start align-items-start flex-column email"
+        >
+          <div class="label">
+            <mat-label class="input-label">Email</mat-label>
+          </div>
+          <mat-form-field
+            class="field mt-2"
+            appearance="outline"
+            [ngClass]="
+              customerManagementService.emailFormControl.valid &&
+              !customerManagementService.exist
+                ? 'profix'
+                : 'prefix'
+            "
+          >
+            <input
+              type="email"
+              matInput
+              [formControl]="customerManagementService.emailFormControl"
+              [errorStateMatcher]="matcher"
+              placeholder="Ex.pat@example.com"
+              [readonly]="customerManagementService.editMode"
+            />
+            <mat-error
+              *ngIf="
+                customerManagementService.emailFormControl.hasError('email') &&
+                !customerManagementService.emailFormControl.hasError('required')
+              "
+            >
+              Please enter a valid email address
+            </mat-error>
+            <mat-error
+              *ngIf="
+                customerManagementService.emailFormControl.hasError('required')
+              "
+            >
+              Email is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <span *ngIf="customerManagementService.exist" class="exist">
+            Email is not availabel!
+          </span>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="d-flex justify-content-start align-items-start flex-column">
+          <div class="label">
+            <mat-label class="input-label">Birth Date</mat-label>
+          </div>
+          <mat-form-field
+            appearance="outline"
+            class="field mt-2"
+            [ngClass]="
+              customerManagementService.birthDateFormControl.valid
+                ? 'profix'
+                : 'prefix'
+            "
+          >
+            <input
+              matInput
+              class="datepicker"
+              [max]="maxDate"
+              [matDatepicker]="picker"
+              [formControl]="customerManagementService.birthDateFormControl"
+              [errorStateMatcher]="matcher"
+              placeholder="Birth Date"
+            />
+            <mat-error
+              *ngIf="
+                customerManagementService.birthDateFormControl.hasError(
+                  'birth'
+                ) &&
+                !customerManagementService.birthDateFormControl.hasError(
+                  'required'
+                )
+              "
+            >
+            </mat-error>
+            <mat-error
+              *ngIf="
+                customerManagementService.birthDateFormControl.hasError(
+                  'required'
+                )
+              "
+            >
+              Birth Date is
+              <strong>required</strong>
+            </mat-error>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <div class="d-flex justify-content-start align-items-start flex-column">
+          <div class="label">
+            <mat-label class="input-label">Phone</mat-label>
+          </div>
+          <mat-form-field
+            class="field mt-2"
+            appearance="outline"
+            [ngClass]="
+              customerManagementService.phoneFormControl.valid &&
+              customerManagementService.phoneFormControl.value
+                ? 'profix'
+                : 'prefix'
+            "
+          >
+            <input
+              type="tel"
+              matInput
+              [formControl]="customerManagementService.phoneFormControl"
+              [errorStateMatcher]="matcher"
+              placeholder="Phone"
+            />
+            <mat-error
+              *ngIf="
+                customerManagementService.phoneFormControl.hasError('required')
+              "
+            >
+              Phone is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <div class="d-flex justify-content-start align-items-start flex-column">
+          <div class="label">
+            <mat-label class="input-label">Bank Account Number</mat-label>
+          </div>
+          <mat-form-field
+            class="field mt-2"
+            appearance="outline"
+            [ngClass]="
+              customerManagementService.bankAccountNumberFormControl.valid &&
+              customerManagementService.bankAccountNumberFormControl.value
+                ? 'profix'
+                : 'prefix'
+            "
+          >
+            <input
+              type="number"
+              matInput
+              [formControl]="
+                customerManagementService.bankAccountNumberFormControl
+              "
+              [errorStateMatcher]="matcher"
+              placeholder="Bank Account Number"
+            />
+            <mat-error
+              *ngIf="
+                customerManagementService.bankAccountNumberFormControl.hasError(
+                  'required'
+                )
+              "
+            >
+              Bank Account Number is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="btn d-flex justify-content-end align-items-center flex-row">
+    <button
+      mat-button
+      class="submit"
+      (click)="customerManagementService.addCustomer()"
+      [disabled]="customerManagementService.disableSubmit()"
+    >
+      Submit
+    </button>
+    <button mat-button class="back" (click)="customerManagementService.back()">
+      Cancel
+    </button>
+  </div>
+</div>

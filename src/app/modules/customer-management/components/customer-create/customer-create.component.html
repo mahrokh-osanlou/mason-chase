@@ -1,1 +1,37 @@
-<p>customer-create works!</p>
+<div class="create-customer">
+  <div class="header" *ngIf="!customerManagementService.editMode; else edit">
+    <h3 class="d-flex justify-content-center align-items-center list">
+      <i> Customer Create </i>
+    </h3>
+  </div>
+  <ng-template #edit>
+    <div class="header">
+      <h3 class="d-flex justify-content-center align-items-center list">
+        <i> Customer Edit </i>
+      </h3>
+    </div>
+  </ng-template>
+  <mat-tab-group
+    [selectedIndex]="customerManagementService.selectedIndex"
+    (selectedTabChange)="setIndex($event)"
+  >
+    <mat-tab
+      *ngIf="
+        !customerManagementService.result || !customerManagementService.success
+      "
+    >
+      <ng-template mat-tab-label>
+        Customer Information
+      </ng-template>
+      <app-customer-add></app-customer-add>
+    </mat-tab>
+
+    <mat-tab label="Result" *ngIf="customerManagementService.result">
+      <app-api-result
+        [errorList]="customerManagementService.errorList"
+        [success]="customerManagementService.success"
+        [link]="'/pages/customer-list'"
+      ></app-api-result>
+    </mat-tab>
+  </mat-tab-group>
+</div>
