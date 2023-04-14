@@ -8,18 +8,15 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from 'src/app/_modules/@auth/service/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   handleError(error: HttpErrorResponse) {
     if (window.location.pathname !== '/authentication') {
       if (error.status === 401) {
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('tenant');
         window.location.href = '/authentication';
       } else if (error.status === 403){
         window.location.href = '/authentication';
