@@ -1,0 +1,33 @@
+<div *ngIf="success; else error" [ngClass]="link ? 'success' : 'success-tab'">
+  <p><mat-icon class="icon">check_circle</mat-icon></p>
+  <h3>Well Done!</h3>
+  <p>Operation was completed successfully!</p>
+  <a [routerLink]="link" *ngIf="link; else index">Back</a>
+  <ng-template #index>
+    <a (click)="back()">Back</a>
+  </ng-template>
+</div>
+<ng-template #error>
+  <div [ngClass]="link ? '' : 'error'">
+    <div class="header">
+      <h3 class="d-flex justify-content-center align-items-center list">
+        error-list
+      </h3>
+      <mat-icon
+        *ngIf="!link"
+        (click)="previous()"
+        class="previous"
+        matTooltip="Fix_error"
+        >arrow_back</mat-icon
+      >
+    </div>
+    <mat-list role="list">
+      <mat-list-item
+        class="error-item"
+        role="listitem"
+        *ngFor="let item of errorList; let i = index"
+        >Message({{ i + 1 }})- {{ item.Message }}</mat-list-item
+      >
+    </mat-list>
+  </div>
+</ng-template>

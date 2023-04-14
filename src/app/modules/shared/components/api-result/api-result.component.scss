@@ -1,0 +1,58 @@
+.success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: calc(100vh - 200px);
+}
+
+.success-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: calc(100vh - 163px);
+}
+
+.icon {
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
+  color: var(--admin_success);
+}
+
+.error-item {
+  color: var(--admin_error);
+  border-bottom: 1px solid var(--content_background);
+}
+
+.header {
+  position: relative;
+  background-color: var(--admin_default);
+  border-radius: 8px;
+  border-bottom: 1px solid var(--content_background);
+}
+
+a {
+  cursor: pointer;
+}
+
+.error {
+  height: calc(100vh - 263px);
+}
+
+.previous {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  cursor: pointer;
+  color: var(--btn_primary);
+}
+
+.next {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  cursor: pointer;
+  color: var(--btn_primary);
+}
