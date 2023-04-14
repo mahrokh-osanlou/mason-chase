@@ -1,0 +1,22 @@
+<mat-toolbar class="toolbar">
+  <div>
+    <button mat-icon-button (click)="openSidenav()" class="menu-btn">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div class="logo">
+    <img
+      src="../../../../../assets/images/logo/brand.png"
+      alt="logo"
+      class="logo-img"
+    />
+  </div>
+  <div class="navtabs-container">
+    <nav mat-tab-nav-bar>
+      <a (click)="home()" class="navbar-item"> Home </a>
+      <a (click)="customerList()" class="navbar-item"> Customer List </a>
+      <a (click)="customerAdd()" class="navbar-item"> Customer Add </a>
+    </nav>
+  </div>
+</mat-toolbar>
