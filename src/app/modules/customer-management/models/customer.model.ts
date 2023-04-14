@@ -5,4 +5,5 @@ export interface Customer {
   PhoneNumber: number;
   Email: string;
   BankAccountNumber: number;
+  fullName?: string;
 }

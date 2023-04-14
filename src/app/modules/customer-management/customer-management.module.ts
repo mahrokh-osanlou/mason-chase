@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { routedComponents, routes } from './customer-management-routing.module';
 import { MaterialModule } from '../@material/material.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [...routedComponents],
@@ -16,6 +17,7 @@ import { MaterialModule } from '../@material/material.module';
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    SharedModule
   ],
   providers:[]
 })
