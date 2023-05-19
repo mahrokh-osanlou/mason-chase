@@ -63,6 +63,7 @@ export class CustomerManagementService {
     BankAccountNumber: this.bankAccountNumberFormControl.value,
   };
   exist: any = null;
+  phoneIsValid: any = {};
 
   constructor(private router: Router, private snakeBar: MatSnackBar) {}
 
@@ -73,7 +74,7 @@ export class CustomerManagementService {
     const customerList = typeof list == "string" ? JSON.parse(list) : null;
     const emailList: any = [];
     const nameList: any = [];
-    customerList.forEach((element: Customer) => {
+    customerList?.forEach((element: Customer) => {
       this.emails.add(element.Email.toLowerCase());
       this.firstNames.add(element.Firstname.toLowerCase());
       this.lastNames.add(element.Lastname.toLowerCase());
@@ -81,11 +82,11 @@ export class CustomerManagementService {
       emailList.push(element.Email);
       nameList.push(element.Firstname + " " + element.Lastname);
     });
-    const customers = customerList.map((el: any) => {
+    const customers = customerList?.map((el: any) => {
       return {
         ...el,
         fullName: el.Firstname + " " + el.Lastname,
-      }
+      };
     });
     this.list = {
       name: nameList,
@@ -175,6 +176,7 @@ export class CustomerManagementService {
       this.phoneFormControl.invalid ||
       this.bankAccountNumberFormControl.invalid ||
       this.birthDateFormControl.invalid ||
+      !this.phoneIsValid.isPossibleNumber ||
       this.exist == true ||
       this.exist == null;
     return validation;

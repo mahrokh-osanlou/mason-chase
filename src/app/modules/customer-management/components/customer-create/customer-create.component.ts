@@ -7,6 +7,7 @@ import { CustomerManagementService } from "../../services/customer.service";
   styleUrls: ["./customer-create.component.scss"],
 })
 export class CustomerCreateComponent implements OnInit, OnDestroy {
+  dialCountry: any;
   constructor(public customerManagementService: CustomerManagementService) {}
 
   ngOnInit(): void {

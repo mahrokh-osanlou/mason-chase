@@ -182,7 +182,8 @@
             appearance="outline"
             [ngClass]="
               customerManagementService.phoneFormControl.valid &&
-              customerManagementService.phoneFormControl.value
+              customerManagementService.phoneFormControl.value &&
+              customerManagementService.phoneIsValid.isPossibleNumber
                 ? 'profix'
                 : 'prefix'
             "
