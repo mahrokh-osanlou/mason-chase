@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { CustomerManagementService } from "../../../services/customer.service";
 import { MyErrorStateMatcher } from "src/app/modules/shared/classes/error-state-matcher";
-import { debounceTime } from "rxjs";
+import {  debounceTime } from "rxjs";
 import { ProgressSpinnerMode } from "@angular/material/progress-spinner";
 import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
+import * as googleLibphonenumber from "google-libphonenumber";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -43,29 +44,30 @@ export class CustomerAddComponent implements OnInit {
 
   getParsedInternationalByNumber(rawNumber: string) {
     try {
-      const parsed = phoneUtil.parseAndKeepRawInput(rawNumber, "IR");
+      const countryCode = phoneUtil.parse(rawNumber, "").getCountryCode() ?? 0;      
+      const id =
+        googleLibphonenumber.PhoneNumberUtil.getInstance().getRegionCodeForCountryCode(
+          countryCode
+        );      
+      const parsed = phoneUtil.parseAndKeepRawInput(rawNumber, id);
       const isPossibleNumber = phoneUtil.isPossibleNumber(parsed);
       const internationalFormatNumber = phoneUtil.format(
         parsed,
         PhoneNumberFormat.E164
       );
-
       this.customerManagementService.phoneIsValid = {
         formattedForDisplay: phoneUtil.formatOutOfCountryCallingNumber(
           parsed,
-          "IR"
+          id
         ),
         rawInput: parsed.getRawInput(),
         isPossibleNumber,
-        isValidNumberForRegionIR: phoneUtil.isValidNumberForRegion(
-          parsed,
-          "IR"
-        ),
-
+        isValidNumberForRegion: phoneUtil.isValidNumberForRegion(parsed, id),
         internationalFormatNumber,
         isValidForSMS:
-          isPossibleNumber && internationalFormatNumber.startsWith("+98"),
-      };
+          isPossibleNumber &&
+          internationalFormatNumber.startsWith("+" + countryCode.toString()),
+      };      
       return this.customerManagementService.phoneIsValid;
     } catch (e: any) {
       return { error: e.message };
