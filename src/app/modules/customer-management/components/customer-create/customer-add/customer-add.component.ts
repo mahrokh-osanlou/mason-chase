@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CustomerManagementService } from "../../../services/customer.service";
 import { MyErrorStateMatcher } from "src/app/modules/shared/classes/error-state-matcher";
-import {  debounceTime } from "rxjs";
+import { debounceTime } from "rxjs";
 import { ProgressSpinnerMode } from "@angular/material/progress-spinner";
 import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
 import * as googleLibphonenumber from "google-libphonenumber";
@@ -44,11 +44,8 @@ export class CustomerAddComponent implements OnInit {
 
   getParsedInternationalByNumber(rawNumber: string) {
     try {
-      const countryCode = phoneUtil.parse(rawNumber, "").getCountryCode() ?? 0;      
-      const id =
-        googleLibphonenumber.PhoneNumberUtil.getInstance().getRegionCodeForCountryCode(
-          countryCode
-        );      
+      const countryCode = phoneUtil.parse(rawNumber, "").getCountryCode() ?? 0;
+      const id = phoneUtil.getRegionCodeForCountryCode(countryCode);
       const parsed = phoneUtil.parseAndKeepRawInput(rawNumber, id);
       const isPossibleNumber = phoneUtil.isPossibleNumber(parsed);
       const internationalFormatNumber = phoneUtil.format(
