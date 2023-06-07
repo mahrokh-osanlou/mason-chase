@@ -1,0 +1,37 @@
+.create-customer {
+  background-color: var(--admin_default);
+  height: 100%;
+  border-radius: 8px;
+}
+
+.header {
+  position: relative;
+}
+
+.list {
+  border-bottom: 1px solid var(--content_background);
+  height: 3.5rem;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+::ng-deep .create-customer .mat-tab-body-content {
+  overflow: hidden;
+}
+
+::ng-deep .create-customer .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color: var(--tab_header_font);
+  background-color: var(--tab_header_background);
+  background-blend-mode: lighten;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
+
+::ng-deep .create-customer .mat-tab-list .mat-tab-label {
+  color: var(--tab_header_font);
+  opacity: 1;
+}
+
+::ng-deep .create-customer .mat-tab-list .mat-tab-labels {
+    border-bottom: 1px solid var(--content_background);
+}

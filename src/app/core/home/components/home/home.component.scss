@@ -1,0 +1,23 @@
+p {
+  font-family: Lato;
+}
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 200px;
+  background-color: var(--sidvan_background);
+}
+
+.content {
+  background-color: var(--content_background);
+}
+
+.main {
+  margin: 1rem;
+  border-radius: 8px;
+}
