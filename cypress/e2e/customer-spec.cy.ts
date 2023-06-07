@@ -136,4 +136,68 @@ describe("template spec", () => {
       });
   });
 
+  it("incorrectEmail", () => {
+    cy.visit("http://localhost:4200/pages/customer-create");
+
+    cy.get("#firstName")
+      .type("mahrokh")
+      .then((el) => {
+        let input_value = el.val();
+        expect(input_value).to.eq("mahrokh");
+      });
+
+    cy.get("#lastName")
+      .type("osanlou")
+      .then((el) => {
+        let input_value = el.val();
+        expect(input_value).to.eq("osanlou");
+      });
+
+    cy.get("#email")
+      .type("Fake_Qa" + generateRandString.toString())
+      .then((el) => {
+        let input_value = el.val();
+        expect(input_value).to.eq(
+          "Fake_Qa" + generateRandString.toString() + "@gmail.com",
+          "Code : 102, Message:  Invalid Email address!"
+        );
+      });
+
+    cy.get("#birthDate")
+      .type("10/27/1991")
+      .then((el) => {
+        let input_value = el.val();
+        expect(input_value).to.eq("10/27/1991");
+      });
+
+    cy.get("#phoneNumber")
+      .type("+989127430071")
+      .then((el) => {
+        let input_value = el.val();
+        expect(input_value).to.eq("+989127430071");
+      });
+
+    cy.get("#bankAccount")
+      .type("12345")
+      .then((el) => {
+        let input_value = el.val();
+        expect(input_value).to.eq("12345");
+      });
+
+    cy.get("#submit")
+      .click()
+      .as("customer")
+      .then(() => {
+        let list = JSON.parse(localStorage.getItem("customerList") ?? "");
+        let exist = list.some((el: any) => {
+          return el.Email == "mahrokh@gmail.com";
+        });
+        expect(
+          exist,
+          "Code : 202, Message: Duplicate customer by Email address!"
+        ).to.not.be.true;
+      });
   });
+
+ 
+});
