@@ -4,7 +4,6 @@ import { MyErrorStateMatcher } from "src/app/modules/shared/classes/error-state-
 import { debounceTime } from "rxjs";
 import { ProgressSpinnerMode } from "@angular/material/progress-spinner";
 import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
-import * as googleLibphonenumber from "google-libphonenumber";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
